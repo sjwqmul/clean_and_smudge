@@ -2,6 +2,8 @@
 
 Use clean and smudge filters to encrypt data to/from git
 
+For an example, see the [config.php](https://github.research.its.qmul.ac.uk/aaw393/standard_det/blob/master/config.php) file in the standard_det project.
+
 Uses the openssl command to encrypt sensitive data in files. A file called "password" should be in the same folder as the scripts and will be used to encrypt/decrypt the data. OpenSSL must be installed and on the path.
 
 clean.sh:
