@@ -36,4 +36,4 @@ echo ".clean_smudge" >>"$IGN_FILE"
 FILTER_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 git config filter.removeapikey.clean ${FILTER_DIR}/clean.sh
 git config filter.removeapikey.smudge ${FILTER_DIR}/smudge.sh
-git config diff.removeapikey.command ${FILTER_DIR}/diff.sh
+git config diff.removeapikey.textconv ${FILTER_DIR}/strip.sh
