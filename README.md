@@ -1,6 +1,6 @@
 # clean_and_smudge
 
-Use clean and smudge filters to encrypt data to/from git
+Use clean and smudge filters to encrypt data to/from git. The filters should be embedded in any projects that use them as then each project can have its own password file.
 
 For an example, see the [config.php](https://github.research.its.qmul.ac.uk/aaw393/standard_det/blob/master/config.php) file in the standard_det project.
 
