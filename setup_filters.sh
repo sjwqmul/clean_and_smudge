@@ -11,7 +11,8 @@ GIT_ROOT=$(git rev-parse --show-toplevel)
 ATTR_FILE=$GIT_ROOT/.gitattributes
 ATTR_SET=""
 if [ -e "$ATTR_FILE" ]; then
-    grep -v removeapikey "$ATTR_FILE" >"$ATTR_FILE"
+    ATTR=$(cat "$ATTR_FILE")
+    echo -e "$ATTR" | grep -v removeapikey >"$ATTR_FILE"
 fi
 echo "*.php filter=removeapikey diff=removeapikey" >>"$ATTR_FILE"
 
@@ -29,7 +30,8 @@ fi
 # Ensure that the password file is ignored
 IGN_FILE=$GIT_ROOT/.gitignore
 if [ -e "$IGN_FILE" ]; then
-    grep -v ".clean_smudge" "$IGN_FILE" >"$IGN_FILE"
+    IGN=$(cat "$IGN_FILE")
+    echo -e "$IGN" | grep -v ".clean_smudge" >"$IGN_FILE"
 fi
 echo ".clean_smudge" >>"$IGN_FILE"
 
