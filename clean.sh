@@ -56,18 +56,5 @@ VARNAME_EXP="\\\$[a-zA-z0-9\\_]*password[a-zA-Z0-9\\_]*"
 PASSWORD_EXP='[^\4]*'
 INPUT=$(encrypt_items "$VARNAME_EXP" "$PASSWORD_EXP" "$INPUT")
 
-#
-## Get the API key(s) from the input
-#API_KEYS=$(echo -e "$INPUT" | sed -n "s/^\(.*\)\($VARNAME_EXP\)\([ \t]*=[ \t]*\)\([\'\"]\)\($API_KEY_EXP\)\(\4.*$\)/\5/p")
-#for API_KEY in $API_KEYS; do
-#    # Encrypt the API key based on a local password file
-#    ENCRYPTED_KEY=$(echo $API_KEY | openssl aes-256-cbc -e -a -A -pass file:$PASSWORD_FILE)
-#    
-#    # Escape any / characters in key
-#    ESC_ENCRYPTED_KEY=$(echo -e "$ENCRYPTED_KEY" | sed -e 's_/_\\/_g')
-#    
-#    # Replace the API key
-#    INPUT=$(echo -e "$INPUT" | sed "s/$API_KEY/<<<ENCRYPTED=$ESC_ENCRYPTED_KEY>>>/")
-#done
-
+# Output the results
 echo -e "$INPUT"
