@@ -7,6 +7,7 @@ INPUT=$(cat ${1:-/dev/stdin})
 
 # Specify the password file
 DIR=$(dirname "${BASH_SOURCE[0]}")
+DIR="$DIR/.clean_smudge"
 PASSWORD_FILE="$DIR/password"
 
 # Test whether password file exists
@@ -20,7 +21,12 @@ ENCRYPTED_ITEMS=$(echo -e "$INPUT" | sed -n "s/^\(.*<<<ENCRYPTED=\)\(.*\)\(>>>.*
 
 for ENCRYPTED_ITEM in $ENCRYPTED_ITEMS; do
     # Decrypt the API key based on a local password file
-    DECRYPTED_ITEM=$(echo -e "$ENCRYPTED_ITEM" | openssl aes-256-cbc -d -a -A -pass "file:$PASSWORD_FILE")
+    DECRYPTED_ITEM=$(echo -e "$ENCRYPTED_ITEM" | openssl aes-256-cbc -d -a -A -pass "file:$PASSWORD_FILE" 2>&1)
+    STATUS=$?
+    if [ $STATUS != 0 ]; then
+        echo "Unable to decrypt item - $DECRYPTED_ITEM"
+        exit $STATUS
+    fi
     
     # Escape any "/" in the encrypted key
     ESC_ENCRYPTED_ITEM=$(echo -e "$ENCRYPTED_ITEM" | sed -e 's_/_\\/_g')
