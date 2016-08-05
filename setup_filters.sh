@@ -15,12 +15,17 @@ if [ -e $ATTR_FILE ]; then
 fi
 echo "*.php filter=removeapikey" >>$ATTR_FILE
 
+# Check for existing password file
+PASSWORD_FILE="password"
+# If no password file exists, generate a 1k random password file
+# dd if=/dev/urandom of=$PASSWORD_FILE bs=1k count=1
+
 # Ensure that the password file is ignored
 #IGN_FILE=$GIT_ROOT/.gitignore
 #if [ -e $IGN_FILE ]; then
-#    grep -v password $IGN_FILE >$IGN_FILE
+#    grep -v $PASSWORD_FILE $IGN_FILE >$IGN_FILE
 #fi
-#echo "password" >>$ATTR_FILE
+#echo "$PASSWORD_FILE" >>$ATTR_FILE
 
 FILTER_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 git config filter.removeapikey.clean ${FILTER_DIR}/clean.sh
