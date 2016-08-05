@@ -6,7 +6,7 @@
 INPUT=$(cat ${1:-/dev/stdin})
 
 # Specify the password file
-DIR=$(dirname "${BASH_SOURCE[0]}")
+DIR=$(git rev-parse --show-toplevel)
 DIR="$DIR/.clean_smudge"
 PASSWORD_FILE="$DIR/password"
 
@@ -24,7 +24,9 @@ for ENCRYPTED_ITEM in $ENCRYPTED_ITEMS; do
     DECRYPTED_ITEM=$(echo -e "$ENCRYPTED_ITEM" | openssl aes-256-cbc -d -a -A -pass "file:$PASSWORD_FILE" 2>&1)
     STATUS=$?
     if [ $STATUS != 0 ]; then
-        echo "Unable to decrypt item - $DECRYPTED_ITEM"
+        echo "Unable to decrypt item" >&2
+        echo "Using password file: $PASSWORD_FILE" >&2
+        echo -e "$DECRYPTED_ITEM" >&2
         exit $STATUS
     fi
     

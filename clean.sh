@@ -6,7 +6,7 @@
 INPUT=$(cat ${1:-/dev/stdin})
 
 # Specify file containing encryption/decryption password
-DIR=$(dirname "${BASH_SOURCE[0]}")
+DIR=$(git rev-parse --show-toplevel)
 DIR="$DIR/.clean_smudge"
 PASSWORD_FILE=$DIR/password
 
