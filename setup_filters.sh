@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Setup git filters to 
+# Setup git filters to encrypt/decrypt data as it is passed to/from git
 #
 GIT_ROOT=$(git rev-parse --show-toplevel)
 ATTR_FILE=$GIT_ROOT/.gitattributes
