@@ -9,6 +9,12 @@ INPUT=$(cat ${1:-/dev/stdin})
 DIR=$(dirname "${BASH_SOURCE[0]}")
 PASSWORD_FILE=$DIR/password
 
+# Test whether password file exists
+if [ ! -e "$PASSWORD_FILE" ]; then
+    echo "No password file was found" >&2
+    exit 1
+fi
+
 # Regex to match a PHP variable name
 VARNAME_EXP="\\\$[a-zA-z0-9\\_]*api[a-zA-Z0-9\\_]*"
 # Regex to match an API key (hex string)

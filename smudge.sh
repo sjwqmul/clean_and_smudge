@@ -8,7 +8,13 @@ INPUT=$(cat ${1:-/dev/stdin})
 # Specify the password file
 DIR=$(dirname "${BASH_SOURCE[0]}")
 PASSWORD_FILE="$DIR/password"
-echo $PASSWORD_FILE
+
+# Test whether password file exists
+if [ ! -e "$PASSWORD_FILE" ]; then
+    echo "No password file was found" >&2
+    exit 1
+fi
+
 # Get the encrypted items from the input
 ENCRYPTED_ITEMS=$(echo -e "$INPUT" | sed -n "s/^\(.*<<<ENCRYPTED=\)\(.*\)\(>>>.*\)$/\2/p")
 
