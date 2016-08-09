@@ -3,7 +3,7 @@
 # Script for decrypting encrypted content
 
 # Get input from STDIN or specified file name 
-INPUT=$(cat ${1:-/dev/stdin})
+INPUT=$(cat ${1:-/dev/stdin} | sed 's/\\/\\\\/g')
 
 # Specify the password file
 DIR=$(git rev-parse --show-toplevel)
@@ -34,7 +34,7 @@ for ENCRYPTED_ITEM in $ENCRYPTED_ITEMS; do
     ESC_ENCRYPTED_ITEM=$(echo -e "$ENCRYPTED_ITEM" | sed -e 's_/_\\/_g')
     
     # Replace the API key
-    INPUT=$(echo -e "$INPUT" | sed "s/<<<ENCRYPTED=$ESC_ENCRYPTED_ITEM>>>/$DECRYPTED_ITEM/")
+    INPUT=$(echo -e "$INPUT" | sed -e "s/<<<ENCRYPTED=$ESC_ENCRYPTED_ITEM>>>/$DECRYPTED_ITEM/" -e 's/\\/\\\\/g')
 done
 
 echo -e "$INPUT"
